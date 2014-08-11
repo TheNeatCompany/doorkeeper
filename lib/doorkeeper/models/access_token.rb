@@ -35,16 +35,16 @@ module Doorkeeper
 
     def self.revoke_all_for(application_id, resource_owner)
       where(application_id: application_id,
-            resource_owner_id: resource_owner.id,
+            resource_owner_id: resource_owner.id.to_s,
             revoked_at: nil)
       .map(&:revoke)
     end
 
     def self.matching_token_for(application, resource_owner_or_id, scopes)
       resource_owner_id = if resource_owner_or_id.respond_to?(:to_key)
-                            resource_owner_or_id.id
+                            resource_owner_or_id.id.to_s
                           else
-                            resource_owner_or_id
+                            resource_owner_or_id.to_s
                           end
       token = last_authorized_token_for(application.try(:id), resource_owner_id)
       token if token && ScopeChecker.matches?(token.scopes, scopes)
@@ -59,7 +59,7 @@ module Doorkeeper
       end
       create!(
         application_id:    application.try(:id),
-        resource_owner_id: resource_owner_id,
+        resource_owner_id: resource_owner_id.to_s,
         scopes:            scopes.to_s,
         expires_in:        expires_in,
         use_refresh_token: use_refresh_token
