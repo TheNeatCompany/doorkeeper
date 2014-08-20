@@ -18,9 +18,8 @@ module Doorkeeper
         @credentials     = credentials
         @original_scopes = parameters[:scope]
 
-        if credentials
-          @client = Application.by_uid_and_secret credentials.uid,
-                                                  credentials.secret
+        if parameters[:client_id].present?
+          @client = Application.by_uid parameters[:client_id]
         end
       end
 
@@ -40,7 +39,7 @@ module Doorkeeper
       end
 
       def validate_client
-        !credentials || !!client
+        !!client
       end
     end
   end
