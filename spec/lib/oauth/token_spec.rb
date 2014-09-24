@@ -55,16 +55,16 @@ module Doorkeeper
         end
       end
 
-      describe :from_bearer_authorization do
+      describe :from_oauth_authorization do
         it 'returns token from authorization bearer' do
-          request = double authorization: 'Bearer SomeToken'
-          token   = Token.from_bearer_authorization(request)
+          request = double authorization: 'OAuth SomeToken'
+          token   = Token.from_oauth_authorization(request)
           expect(token).to eq('SomeToken')
         end
 
         it 'does not return token if authorization is not bearer' do
           request = double authorization: 'MAC SomeToken'
-          token   = Token.from_bearer_authorization(request)
+          token   = Token.from_oauth_authorization(request)
           expect(token).to be_blank
         end
       end

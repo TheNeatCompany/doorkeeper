@@ -121,7 +121,7 @@ describe Doorkeeper, 'configuration' do
 
   describe 'access_token_credentials' do
     it 'has defaults order' do
-      expect(subject.access_token_methods).to eq([:from_bearer_authorization, :from_access_token_param, :from_bearer_param])
+      expect(subject.access_token_methods).to eq([:from_oauth_authorization, :from_access_token_param, :from_bearer_param])
     end
 
     it 'can change the value' do

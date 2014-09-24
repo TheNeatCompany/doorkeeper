@@ -10,8 +10,8 @@ module Doorkeeper
           request.parameters[:bearer_token]
         end
 
-        def from_bearer_authorization(request)
-          pattern = /^Bearer /
+        def from_oauth_authorization(request)
+          pattern = /^OAuth /
           header  = request.authorization
           token_from_header(header, pattern) if match?(header, pattern)
         end
